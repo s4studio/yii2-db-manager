@@ -4,12 +4,12 @@ use yii\grid\GridView;
 use yii\bootstrap4\ActiveForm;
 use yii\bootstrap4\Html;
 
-use bs\dbManager\models\BaseDumpManager;
+use s4studio\dbManager\models\BaseDumpManager;
 
 /* @var $this yii\web\View */
 /* @var array $dbList */
 /* @var array $activePids */
-/* @var \bs\dbManager\models\Dump $model */
+/* @var \s4studio\dbManager\models\Dump $model */
 /* @var $dataProvider yii\data\ArrayDataProvider */
 
 $this->title = Yii::t('dbManager', 'DB manager');
