@@ -83,7 +83,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
-            'pjax' => false,
             'columns' => [
                 [
                     'attribute' => 'type',
@@ -107,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '{download} {restore} {storage} {delete}',
                     'buttons' => [
                         'download' => function ($url, $model) {
-                            return Html::a(Icon::show('download'),
+                            return Html::a(Html::tag('i','', ['class' => 'fa fa-download']),
                                 [
                                     'download',
                                     'id' => $model['id'],
@@ -118,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ]);
                         },
                         'restore' => function ($url, $model) {
-                            return Html::a(Icon::show('rev', ['framework' => Icon::FAB]),
+                            return Html::a(Html::tag('i','', ['class' => 'fa fa-arrows']),
                                 [
                                     'restore',
                                     'id' => $model['id'],
@@ -132,7 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if (Yii::$app->has('backupStorage')) {
                                 $exists = Yii::$app->backupStorage->has($model['name']);
 
-                                return Html::a(Icon::show('upload'),
+                                return Html::a(Html::tag('i','', ['class' => 'fa fa-upload']),
                                     [
                                         'storage',
                                         'id' => $model['id'],
@@ -144,7 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         },
                         'delete' => function ($url, $model) {
-                            return Html::a(Icon::show('trash'),
+                            return Html::a(Html::tag('i','', ['class' => 'fa fa-trash']),
                                 [
                                     'delete',
                                     'id' => $model['id'],
