@@ -42,7 +42,7 @@ Advanced ```backend/config/main.php```
 ```php
     'modules' => [
         'db-manager' => [
-            'class' => 'bs\dbManager\Module',
+            'class' => 's4studio\dbManager\Module',
             // path to directory for the dumps
             'path' => '@app/backups',
             // list of registerd db-components
@@ -84,7 +84,7 @@ Advanced ```backend/config/main.php```
     ],
     'modules' => [
         'db-manager' => [
-            'class' => 'bs\dbManager\Module',
+            'class' => 's4studio\dbManager\Module',
             // Flysystem adapter (optional) creocoder\flysystem\LocalFilesystem will be used as default. 
             'flySystemDriver' => 'creocoder\flysystem\LocalFilesystem',
             // path to directory for the dumps
@@ -132,7 +132,7 @@ Advanced ```backend/config/main.php```
 ```php
     'modules' => [
         'db-manager' => [
-            'class' => 'bs\dbManager\Module',
+            'class' => 's4studio\dbManager\Module',
             // Flysystem adapter (optional) creocoder\flysystem\LocalFilesystem will be used as default. 
             'flySystemDriver' => 'creocoder\flysystem\LocalFilesystem',
             // path to directory for the dumps

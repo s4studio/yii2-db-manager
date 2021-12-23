@@ -12,6 +12,11 @@
             "name": "Insolita",
             "email": "donnainsolita@gmail.com",
             "role": "Developer"
+        },
+        {
+            "name": "Edmund Kawalec",
+            "email": "e.kawalec@s4studio.pl",
+            "role": "Developer"
         }
     ],
     "type": "yii2-extension",
@@ -33,6 +38,6 @@
         }
     },
     "extra": {
-        "bootstrap": "bs\\dbManager\\Bootstrap"
+        "bootstrap": "s4studio\\dbManager\\Bootstrap"
     }
 }
