@@ -1,6 +1,6 @@
 <?php
 
-namespace bs\dbManager\models;
+namespace s4studio\dbManager\models;
 
 use Yii;
 use yii\base\Model;

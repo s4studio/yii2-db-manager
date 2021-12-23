@@ -1,6 +1,6 @@
 <?php
 
-namespace bs\dbManager\controllers;
+namespace s4studio\dbManager\controllers;
 
 use Yii;
 use yii\data\ArrayDataProvider;
@@ -9,8 +9,8 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
 use yii\web\Controller;
-use bs\dbManager\models\Dump;
-use bs\dbManager\models\Restore;
+use s4studio\dbManager\models\Dump;
+use s4studio\dbManager\models\Restore;
 use Symfony\Component\Process\Process;
 
 /**

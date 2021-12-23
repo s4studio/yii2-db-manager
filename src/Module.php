@@ -1,6 +1,6 @@
 <?php
 
-namespace bs\dbManager;
+namespace s4studio\dbManager;
 
 use creocoder\flysystem\LocalFilesystem as CreocoderLocalFileSystem;
 use Yii;
@@ -13,14 +13,14 @@ use yii\di\Instance;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
 use yii\helpers\StringHelper;
-use bs\dbManager\contracts\IDumpManager;
-use bs\dbManager\models\MysqlDumpManager;
-use bs\dbManager\models\PostgresDumpManager;
+use s4studio\dbManager\contracts\IDumpManager;
+use s4studio\dbManager\models\MysqlDumpManager;
+use s4studio\dbManager\models\PostgresDumpManager;
 
 /**
  * Class Module.
  *
- * @package bs\dbManager
+ * @package s4studio\dbManager
  */
 class Module extends BaseModule
 {
@@ -75,7 +75,7 @@ class Module extends BaseModule
 
     /**
      * @var callable|Closure $createManagerCallback
-     * argument - dbInfo; expected reply - instance of bs\dbManager\contracts\IDumpManager or false, for default
+     * argument - dbInfo; expected reply - instance of s4studio\dbManager\contracts\IDumpManager or false, for default
      * @example
      * 'createManagerCallback' => function($dbInfo) {
      *     if($dbInfo['dbName'] == 'exclusive') {

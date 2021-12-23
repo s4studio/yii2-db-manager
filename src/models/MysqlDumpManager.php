@@ -1,6 +1,6 @@
 <?php
 
-namespace bs\dbManager\models;
+namespace s4studio\dbManager\models;
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;

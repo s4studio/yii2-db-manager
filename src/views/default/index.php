@@ -1,8 +1,9 @@
 <?php
 
-use yii\bootstrap\ActiveForm;
-use yii\bootstrap\Html;
 use yii\grid\GridView;
+use yii\bootstrap4\ActiveForm;
+use yii\bootstrap4\Html;
+
 use bs\dbManager\models\BaseDumpManager;
 
 /* @var $this yii\web\View */
@@ -14,133 +15,158 @@ use bs\dbManager\models\BaseDumpManager;
 $this->title = Yii::t('dbManager', 'DB manager');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="dbManager-default-index">
 
-    <div class="well">
+
+<div class="row">
+    <div class="col-md-3">
+        <h3 class="">
+            <?= Yii::t('dbManager', 'Create dump') ?>
+        </h3>
+
         <?php $form = ActiveForm::begin([
             'action' => ['create'],
             'method' => 'post',
-            'layout' => 'inline',
+            //'layout' => 'horizontal'
         ]) ?>
+        <?= $form->field($model, 'db')->dropDownList(array_combine($dbList, $dbList), ['prompt' => ''])->label(Yii::t('dbManager', 'Database')) ?>
 
-        <?= $form->field($model, 'db')->dropDownList(array_combine($dbList, $dbList), ['prompt' => '']) ?>
+        <?= $form->field($model, 'isArchive', [
+            'horizontalCssClasses' => [
+                'label' => 'col-sm-4 text-left text-sm-right pt-2',
+                'wrapper' => 'col-sm-8 pt-2',
+            ],
+        ])->checkbox()->label(Yii::t('dbManager', 'gzip')) ?>
 
-        <?= $form->field($model, 'isArchive')->checkbox() ?>
-
-        <?= $form->field($model, 'schemaOnly')->checkbox() ?>
+        <?= $form->field($model, 'schemaOnly')->checkbox()->label(Yii::t('dbManager', 'Dump only schema')) ?>
 
         <?php if (!BaseDumpManager::isWindows()) {
-            echo $form->field($model, 'runInBackground')->checkbox();
+            echo $form->field($model, 'runInBackground')->checkbox()->label(Yii::t('dbManager', 'Run in background'));
         } ?>
 
         <?php if ($model->hasPresets()): ?>
-            <?= $form->field($model, 'preset')->dropDownList($model->getCustomOptions(), ['prompt' => '']) ?>
+            <?= $form->field($model, 'preset')->dropDownList($model->getCustomOptions(), ['prompt' => ''])->label(Yii::t('dbManager', 'Custom dump preset')) ?>
         <?php endif ?>
 
         <?= Html::submitButton(Yii::t('dbManager', 'Create dump'), ['class' => 'btn btn-success']) ?>
-
         <?php ActiveForm::end() ?>
+
     </div>
-
-    <?php if (!empty($activePids)): ?>
-        <div class="well">
-            <h4><?= Yii::t('dbManager', 'Active processes:') ?></h4>
-            <?php foreach ($activePids as $pid => $cmd): ?>
-                <b><?= $pid ?></b>: <?= $cmd ?><br>
-            <?php endforeach ?>
+    <div class="col-md-9">
+        <div class="row">
+            <div class="col-md-9">
+                <h3 class="">
+                    <?= Html::encode($this->title) ?>
+                </h3>
+            </div>
+            <div class="col-md-3">
+                <?= Html::a(Yii::t('dbManager', 'Delete all'),
+                    ['delete-all'],
+                    [
+                        'class' => 'btn btn-danger btn-sm btn-icon btn-icon-md',
+                        'data-method' => 'post',
+                        'data-confirm' => Yii::t('dbManager', 'Are you sure?'),
+                        'title' => Yii::t('dbManager', 'Delete all'),
+                    ]
+                ) ?>
+            </div>
         </div>
-    <?php endif ?>
 
-    <p>
-        <?= Html::a(Yii::t('dbManager', 'Delete all'),
-            ['delete-all'],
-            [
-                'class' => 'btn btn-danger',
-                'data-method' => 'post',
-                'data-confirm' => Yii::t('dbManager', 'Are you sure?'),
-            ]
-        ) ?>
-    </p>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            //['class' => 'yii\grid\SerialColumn'],
+        <?php if (!empty($activePids)): ?>
+            <div class="alert alert-warning">
+                <h4><?= Yii::t('dbManager', 'Active processes:') ?></h4>
+                <?php foreach ($activePids as $pid => $cmd): ?>
+                    <b><?= $pid ?></b>: <?= $cmd ?><br>
+                <?php endforeach ?>
+            </div>
+        <?php endif ?>
 
-            [
-                'attribute' => 'type',
-                'label' => Yii::t('dbManager', 'Type'),
-            ],
-            [
-                'attribute' => 'name',
-                'label' => Yii::t('dbManager', 'Name'),
-            ],
-            [
-                'attribute' => 'size',
-                'label' => Yii::t('dbManager', 'Size'),
-            ],
-            [
-                'attribute' => 'create_at',
-                'label' => Yii::t('dbManager', 'Create time'),
-            ],
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'pjax' => false,
+            'columns' => [
+                [
+                    'attribute' => 'type',
+                    'label' => Yii::t('dbManager', 'Type'),
+                ],
+                [
+                    'attribute' => 'name',
+                    'label' => Yii::t('dbManager', 'Name'),
+                ],
+                [
+                    'attribute' => 'size',
+                    'label' => Yii::t('dbManager', 'Size'),
+                ],
+                [
+                    'attribute' => 'create_at',
+                    'label' => Yii::t('dbManager', 'Create time'),
+                ],
 
-            [
-                'class' => 'yii\grid\ActionColumn',
-                'template' => '{download} {restore} {storage} {delete}',
-                'buttons' => [
-                    'download' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-download-alt"></span>',
-                            [
-                                'download',
-                                'id' => $model['id'],
-                            ],
-                            [
-                                'title' => Yii::t('dbManager', 'Download'),
-                                'class' => 'btn btn-sm btn-default',
-                            ]);
-                    },
-                    'restore' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-import"></span>',
-                            [
-                                'restore',
-                                'id' => $model['id'],
-                            ],
-                            [
-                                'title' => Yii::t('dbManager', 'Restore'),
-                                'class' => 'btn btn-sm btn-default',
-                            ]);
-                    },
-                    'storage' => function ($url, $model) {
-                        if (Yii::$app->has('backupStorage')) {
-                            $exists = Yii::$app->backupStorage->has($model['name']);
-
-                            return Html::a('<span class="glyphicon glyphicon-cloud-upload"></span>',
+                [
+                    'class' => 'yii\grid\ActionColumn',
+                    'template' => '{download} {restore} {storage} {delete}',
+                    'buttons' => [
+                        'download' => function ($url, $model) {
+                            return Html::a(Icon::show('download'),
                                 [
-                                    'storage',
+                                    'download',
                                     'id' => $model['id'],
                                 ],
                                 [
-                                    'title' => $exists ? Yii::t('dbManager', 'Delete from storage') : Yii::t('dbManager', 'Upload to storage'),
-                                    'class' => $exists ? 'btn btn-sm btn-danger' : 'btn btn-sm btn-success',
+                                    'title' => Yii::t('dbManager', 'Download'),
+                                    'class' => 'text-default mr-3',
                                 ]);
-                        }
-                    },
-                    'delete' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-trash"></span>',
-                            [
-                                'delete',
-                                'id' => $model['id'],
-                            ],
-                            [
-                                'title' => Yii::t('dbManager', 'Delete'),
-                                'data-method' => 'post',
-                                'data-confirm' => Yii::t('dbManager', 'Are you sure?'),
-                                'class' => 'btn btn-sm btn-danger',
-                            ]);
-                    },
+                        },
+                        'restore' => function ($url, $model) {
+                            return Html::a(Icon::show('rev', ['framework' => Icon::FAB]),
+                                [
+                                    'restore',
+                                    'id' => $model['id'],
+                                ],
+                                [
+                                    'title' => Yii::t('dbManager', 'Restore'),
+                                    'class' => 'text-success mr-3',
+                                ]);
+                        },
+                        'storage' => function ($url, $model) {
+                            if (Yii::$app->has('backupStorage')) {
+                                $exists = Yii::$app->backupStorage->has($model['name']);
+
+                                return Html::a(Icon::show('upload'),
+                                    [
+                                        'storage',
+                                        'id' => $model['id'],
+                                    ],
+                                    [
+                                        'title' => $exists ? Yii::t('dbManager', 'Delete from storage') : Yii::t('dbManager', 'Upload from storage'),
+                                        'class' => $exists ? 'text-danger mr-3' : 'text-success mr-3',
+                                    ]);
+                            }
+                        },
+                        'delete' => function ($url, $model) {
+                            return Html::a(Icon::show('trash'),
+                                [
+                                    'delete',
+                                    'id' => $model['id'],
+                                ],
+                                [
+                                    'role' => 'modal-remote',
+                                    'title' => Yii::t('dbManager', 'Delete'),
+                                    'class' => 'text-danger',
+                                    'data-confirm' => false,
+                                    'data-method' => false,// for overide yii data api
+                                    'data-confirm-ok' => 'Usuń',
+                                    'data-confirm-cancel' => 'Anuluj',
+                                    'data-request-method' => 'post',
+                                    'data-toggle' => 'tooltip',
+                                    'data-confirm-title' => Yii::t('dbManager', 'Are you sure?'),
+                                    'data-confirm-message' => 'Na pewno chcesz usunąć ten element?'
+                                ]);
+                        },
+                    ],
                 ],
             ],
-        ],
-    ]) ?>
+        ]) ?>
 
+    </div>
 </div>

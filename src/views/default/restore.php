@@ -2,10 +2,10 @@
 
 use yii\bootstrap\ActiveForm;
 use yii\bootstrap\Html;
-use bs\dbManager\models\BaseDumpManager;
+use s4studio\dbManager\models\BaseDumpManager;
 
 /* @var $this yii\web\View */
-/* @var \bs\dbManager\models\Restore $model */
+/* @var \s4studio\dbManager\models\Restore $model */
 /* @var string $file */
 /* @var int $id */
 
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dbManager-default-restore">
 
-    <div class="well">
+
         <h4><?= Yii::t('dbManager', 'Restore') . ': ' .  $file ?></h4>
         <?php $form = ActiveForm::begin([
             'action' => ['restore', 'id' => $id],
@@ -37,6 +37,5 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::submitButton(Yii::t('dbManager', 'Restore'), ['class' => 'btn btn-success']) ?>
 
         <?php ActiveForm::end() ?>
-    </div>
 
 </div>

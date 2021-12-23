@@ -1,11 +1,11 @@
 <?php
 
-namespace bs\dbManager;
+namespace s4studio\dbManager;
 
 use yii\base\BootstrapInterface;
 use yii\console\Application as ConsoleApplication;
 use yii\web\Application as WebApplication;
-use bs\dbManager\commands\DumpController;
+use s4studio\dbManager\commands\DumpController;
 
 /**
  * dbManager module bootstrap class.

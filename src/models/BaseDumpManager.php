@@ -1,8 +1,8 @@
 <?php
 
-namespace bs\dbManager\models;
+namespace s4studio\dbManager\models;
 
-use bs\dbManager\contracts\IDumpManager;
+use s4studio\dbManager\contracts\IDumpManager;
 
 /**
  * Class BaseDumpManager.

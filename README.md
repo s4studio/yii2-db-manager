@@ -2,10 +2,10 @@
 
 Click on a :star:!
 
-[![Total Downloads](https://poser.pugx.org/beaten-sect0r/yii2-db-manager/downloads?format=flat-square)](https://packagist.org/packages/beaten-sect0r/yii2-db-manager)
-[![Latest Stable Version](https://poser.pugx.org/beaten-sect0r/yii2-db-manager/v/stable?format=flat-square)](https://packagist.org/packages/beaten-sect0r/yii2-db-manager)
-[![Latest Unstable Version](https://poser.pugx.org/beaten-sect0r/yii2-db-manager/v/unstable?format=flat-square)](https://packagist.org/packages/beaten-sect0r/yii2-db-manager)
-[![License](https://poser.pugx.org/beaten-sect0r/yii2-db-manager/license?format=flat-square)](https://packagist.org/packages/beaten-sect0r/yii2-db-manager)
+[![Total Downloads](https://poser.pugx.org/s4studio/yii2-db-manager/downloads?format=flat-square)](https://packagist.org/packages/s4studio/yii2-db-manager)
+[![Latest Stable Version](https://poser.pugx.org/s4studio/yii2-db-manager/v/stable?format=flat-square)](https://packagist.org/packages/s4studio/yii2-db-manager)
+[![Latest Unstable Version](https://poser.pugx.org/s4studio/yii2-db-manager/v/unstable?format=flat-square)](https://packagist.org/packages/s4studio/yii2-db-manager)
+[![License](https://poser.pugx.org/s4studio/yii2-db-manager/license?format=flat-square)](https://packagist.org/packages/s4studio/yii2-db-manager)
 
 MySQL/PostgreSQL Database Backup and Restore functionality
 
@@ -18,13 +18,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```bash
-composer require --prefer-dist beaten-sect0r/yii2-db-manager "*"
+composer require --prefer-dist s4studio/yii2-db-manager "*"
 ```
 
 or add
 
 ```
-"beaten-sect0r/yii2-db-manager": "*"
+"s4studio/yii2-db-manager": "*"
 ```
 
 to the require section of your `composer.json` file.

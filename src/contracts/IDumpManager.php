@@ -1,11 +1,11 @@
 <?php
 
-namespace bs\dbManager\contracts;
+namespace s4studio\dbManager\contracts;
 
 /**
  * Interface IDumpManager.
  *
- * @package bs\dbManager\contracts
+ * @package s4studio\dbManager\contracts
  */
 interface IDumpManager
 {

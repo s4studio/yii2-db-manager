@@ -1,6 +1,6 @@
 <?php
 
-namespace bs\dbManager\commands;
+namespace s4studio\dbManager\commands;
 
 use Yii;
 use yii\console\Controller;
@@ -8,12 +8,12 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Console;
 use yii\helpers\FileHelper;
 use yii\helpers\StringHelper;
-use bs\dbManager\models\Dump;
-use bs\dbManager\models\Restore;
+use s4studio\dbManager\models\Dump;
+use s4studio\dbManager\models\Restore;
 use PDO;
 use PDOException;
 use Symfony\Component\Process\Process;
-use bs\dbManager\Module;
+use s4studio\dbManager\Module;
 
 /**
  * Database backup manager.
