@@ -16,33 +16,53 @@ class PostgresDumpManager extends BaseDumpManager
      * @param array $dumpOptions
      * @return string
      */
-    public function makeDumpCommand($path, array $dbInfo, array $dumpOptions)
+   public function makeDumpCommand($path, array $dbInfo, array $dumpOptions)
     {
-        if ($this->isWindows()) {
-            $arguments[] = "set PGPASSWORD='{$dbInfo['password']}'";
-            $arguments[] = '&';
-        } else {
-            $arguments[] = "PGPASSWORD='{$dbInfo['password']}'";
-        }
         // default port
         if (empty($dbInfo['port'])) {
             $dbInfo['port'] = '5432';
         }
-        $arguments = ArrayHelper::merge($arguments, [
-            'pg_dump',
-            '--host=' . $dbInfo['host'],
-            '--port=' . $dbInfo['port'],
-            '--username=' . $dbInfo['username'],
-            '--no-password',
-        ]);
+        $arguments = [];
+        if (!$this->isWindows()) {
+            $arguments[] = "PGPASSWORD='{$dbInfo['password']}'";
+        }
+        
+        $params = [];
+        if ($this->isWindows()) {
+            $params = [
+                'pg_dump',
+                '"',
+                'host=' . $dbInfo['host'],
+                'port=' . $dbInfo['port'],
+                'user=' . $dbInfo['username'],
+                'password=' . $dbInfo['password'],
+                'dbname=' . $dbInfo['dbName'],
+                '"',
+            ];
+        }  else {
+            $params = [
+                'pg_dump',
+                '--host=' . $dbInfo['host'],
+                '--port=' . $dbInfo['port'],
+                '--username=' . $dbInfo['username'],
+                '--no-password',
+            ];
+        }
+
+        $arguments = ArrayHelper::merge($arguments, $params);
+
         if ($dumpOptions['schemaOnly']) {
             $arguments[] = '--schema-only';
         }
         if ($dumpOptions['preset']) {
             $arguments[] = trim($dumpOptions['presetData']);
         }
-        $arguments[] = $dbInfo['dbName'];
-        if ($dumpOptions['isArchive']) {
+
+        if (!$this->isWindows()) {
+            $arguments[] = $dbInfo['dbName'];
+        }
+
+        if ($dumpOptions['isArchive'] && !$this->isWindows()) {
             $arguments[] = '|';
             $arguments[] = 'gzip';
         }
