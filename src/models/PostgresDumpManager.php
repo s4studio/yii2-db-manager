@@ -26,11 +26,14 @@ class PostgresDumpManager extends BaseDumpManager
         if (!$this->isWindows()) {
             $arguments[] = "PGPASSWORD='{$dbInfo['password']}'";
         }
-        
+        $arguments[] = 'pg_dump';
+        if ($dumpOptions['schemaOnly']) {
+            $arguments[] = '--schema-only';
+        }
+
         $params = [];
         if ($this->isWindows()) {
             $params = [
-                'pg_dump',
                 '"',
                 'host=' . $dbInfo['host'],
                 'port=' . $dbInfo['port'],
@@ -39,9 +42,9 @@ class PostgresDumpManager extends BaseDumpManager
                 'dbname=' . $dbInfo['dbName'],
                 '"',
             ];
-        }  else {
+        }
+        else {
             $params = [
-                'pg_dump',
                 '--host=' . $dbInfo['host'],
                 '--port=' . $dbInfo['port'],
                 '--username=' . $dbInfo['username'],
@@ -51,9 +54,6 @@ class PostgresDumpManager extends BaseDumpManager
 
         $arguments = ArrayHelper::merge($arguments, $params);
 
-        if ($dumpOptions['schemaOnly']) {
-            $arguments[] = '--schema-only';
-        }
         if ($dumpOptions['preset']) {
             $arguments[] = trim($dumpOptions['presetData']);
         }
